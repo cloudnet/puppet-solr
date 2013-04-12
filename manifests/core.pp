@@ -34,6 +34,7 @@ define solr::core($core_name = $title, $base_data_dir, $solr_home) {
 
   #Copy the respective solrconfig.xml file
   file { "solrconfig-${core_name}":
+    replace => "no",
     ensure => file,
     path => "${solr_home}/${core_name}/conf/solrconfig.xml",
     content => template('solr/solrconfig.xml.erb'),
@@ -44,6 +45,7 @@ define solr::core($core_name = $title, $base_data_dir, $solr_home) {
 
   #Copy the respective schema.xml file
   file { "schema-${core_name}":
+    replace => "no",
     ensure => file,
     path => "${solr_home}/${core_name}/conf/schema.xml",
     content => template('solr/schema.xml.erb'),

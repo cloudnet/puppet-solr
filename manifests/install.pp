@@ -115,6 +115,7 @@ class solr::install ($source_url, $home_dir, $solr_data_dir, $package, $cores, $
 
   # Create Solr file referencing new cores
   file { "$solr_home_dir/solr.xml":
+    replace => "no",
     ensure => present,
     content => template("solr/solr.xml.erb"),
     notify  => Service['tomcat6'],

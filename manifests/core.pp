@@ -37,7 +37,18 @@ define solr::core($core_name = $title, $base_data_dir, $solr_home) {
     replace => "no",
     ensure => file,
     path => "${solr_home}/${core_name}/conf/solrconfig.xml",
-    content => template('solr/solrconfig.xml.erb'),
+    #content => template('solr/solrconfig.xml.erb'),
+    content => template('solr/solrconfig.xml-3-6.erb'),
+    require => File["${solr_home}/${core_name}/conf/"],
+    group   => "tomcat6",
+    owner   => "tomcat6",
+  }
+
+  file { "elevate-${core_name}":
+    replace => "no",
+    ensure => file,
+    path => "${solr_home}/${core_name}/conf/elevate.xml",
+    source => "puppet:///modules/solr/elevate.xml",
     require => File["${solr_home}/${core_name}/conf/"],
     group   => "tomcat6",
     owner   => "tomcat6",
